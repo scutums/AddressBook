@@ -4,8 +4,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.Contacts;
-import android.provider.ContactsContract;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
@@ -17,7 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import kh.stepin.alexander.addressbook.data.DatabaseDescription;
+import kh.stepin.alexander.addressbook.data.DatabaseDescription.Contact;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -56,6 +54,7 @@ public class ContactsFragment extends Fragment implements LoaderManager.LoaderCa
 
         recyclerView.setAdapter(contactsAdapter);
         recyclerView.addItemDecoration(new ItemDivider(getContext()));
+        recyclerView.setHasFixedSize(true);
         FloatingActionButton addButton = (FloatingActionButton) view.findViewById(R.id.addButton);
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,7 +91,7 @@ public class ContactsFragment extends Fragment implements LoaderManager.LoaderCa
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         switch (id) {
             case CONTACTS_LOADER:
-                return new CursorLoader(getActivity(), DatabaseDescription.Contact.CONTENT_URI, null, null, null, DatabaseDescription.Contact.COLUMN_NAME + "COLLATE NOCASE ASC");
+                return new CursorLoader(getActivity(), Contact.CONTENT_URI, null, null, null, Contact.COLUMN_NAME + "COLLATE NOCASE ASC");
             default:
                 return null;
         }
